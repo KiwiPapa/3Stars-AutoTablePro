@@ -22,7 +22,7 @@ function varargout = AutoTablePro(varargin)
 
 % Edit the above text to modify the response to help AutoTablePro
 
-% Last Modified by GUIDE v2.5 19-Jan-2020 22:34:15
+% Last Modified by GUIDE v2.5 03-Dec-2019 12:10:53
 
 % Begin initialization code - DO NOT EDIT
 gui_Singleton = 1;
@@ -190,25 +190,6 @@ clickNum=str2num(get(handles.edit4,'String'));%获取井段数
         for i=1:clickNum
             xlswrite('AutoTable.xls',dataInterpretation(i),['J' num2str(i+1) ':' 'J' num2str(i+1)]);
         end
-msgbox('已创建名为AutoTable.xls的表格文件在程序目录中，请查看:)','温馨提示');
-%描述输出到文本框
-textLineNum=str2num(get(handles.edit4,'String'));
-line=1;
-str(line)=strcat("井段",char(dataInterval(line)),"m，存在明显套管变形特征，变形长度为",num2str(data4(line,3)),...
-    "m，变形点深度为",num2str(data4(line,4)),"m，测量最小内径为",num2str(data4(line,5)),"mm，测量平均内径为",...
-    num2str(data4(line,6)),"mm，测量最大内径为",num2str(data4(line,7)),"mm，最大变形量为",num2str(data4(line,8)),...
-    "mm，变形程度为",num2str(data4(line,9)),"%，根据标准评价为",char(dataInterpretation(line)),"。");
-strFinal=str(1);
-if textLineNum>1
-    for line=2:textLineNum
-        str(line)=strcat("井段",char(dataInterval(line)),"m，存在明显套管变形特征，变形长度为",num2str(data4(line,3)),...
-    "m，变形点深度为",num2str(data4(line,4)),"m，测量最小内径为",num2str(data4(line,5)),"mm，测量平均内径为",...
-    num2str(data4(line,6)),"mm，测量最大内径为",num2str(data4(line,7)),"mm，最大变形量为",num2str(data4(line,8)),...
-    "mm，变形程度为",num2str(data4(line,9)),"%，根据标准评价为",char(dataInterpretation(line)),"。");
-        strFinal=[strFinal,str(line)];
-    end
-end
-set(handles.edit5,'String',strFinal);
 
 % --- Executes during object creation, after setting all properties.
 function pushbutton1_CreateFcn(hObject, eventdata, handles)
@@ -380,31 +361,10 @@ function pushbutton4_Callback(hObject, eventdata, handles)
 clickNumTwo=str2num(get(handles.edit4,'String'));
 
 if clickNumTwo>1
-    clickNumTwo=clickNumTwo-1;
+    temp=clickNumTwo-1;
+    clickNumTwo=temp;
     oldData=get(handles.uitable2,'Data');
     newData=oldData(1:end-1,:);
     set(handles.uitable2,'Data',newData);
     set(handles.edit4,'String',num2str(clickNumTwo));
-end
-
-
-
-function edit5_Callback(hObject, eventdata, handles)
-% hObject    handle to edit5 (see GCBO)
-% eventdata  reserved - to be defined in a future version of MATLAB
-% handles    structure with handles and user data (see GUIDATA)
-% Hints: get(hObject,'String') returns contents of edit5 as text
-%        str2double(get(hObject,'String')) returns contents of edit5 as a double
-% --- Executes during object creation, after setting all properties.
-
-
-function edit5_CreateFcn(hObject, eventdata, handles)
-% hObject    handle to edit5 (see GCBO)
-% eventdata  reserved - to be defined in a future version of MATLAB
-% handles    empty - handles not created until after all CreateFcns called
-
-% Hint: edit controls usually have a white background on Windows.
-%       See ISPC and COMPUTER.
-if ispc && isequal(get(hObject,'BackgroundColor'), get(0,'defaultUicontrolBackgroundColor'))
-    set(hObject,'BackgroundColor','white');
 end
